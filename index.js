@@ -47,7 +47,7 @@ app.use(express.json());
 
 let users = [
   { id: 1, name: 'Ali' },
-  { id: 2, name: 'Vali' },
+  { id: 2, name: 'Valijon' },
 ];
 
 // Barcha userlar
