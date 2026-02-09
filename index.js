@@ -1,49 +1,24 @@
-// const express = require('express');
-// const app = express();
-// const cors = require('cors');
-// app.use(cors());
-
-// // Middleware – JSON ma'lumotlarni o‘qish uchun
-// app.use(express.json());
-
-// let users = [
-//   { id: 1, name: 'Ali' },
-//   { id: 2, name: 'Vali' },
-// ];
-
-// app.get('/users', (req, res) => {
-//   res.send('Hello World from Express!');
-// });
-
-// app.get('/users/:id', (req, res) => {
-//   res.send('Bu haqida sahifa. Backend o‘rganayapmiz!');
-// });
-
-// app.post('/users', (req, res) => {
-//   const { name } = req.body;
-//   res.status(201).json({ message: `Yangi user qo'shildi: ${name}` });
-// });
-
-// app.put('/users/:id', (req, res) => {
-//   const { id } = req.params;
-//   const { name } = req.body;
-//   res.json({ message: `User ${id} yangilandi: ${name}` });
-// });
-
-// app.delete('/users/:id', (req, res) => {
-//   const { id } = req.params;
-//   res.json({ message: `User ${id} o‘chirildi` });
-// });
-
-// app.listen(3000, () => {
-//   console.log('Server 3000-portda ishlamoqda → http://localhost:3000');
-// });
-
+const { Pool } = require('pg');
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  ssl: false, // faqat cloud serverda bo‘lsa true qilish kerak
+});
+
+pool
+  .connect()
+  .then(() => console.log('✅ PostgreSQL ga muvaffaqiyatli ulandi!'))
+  .catch((err) => console.error('❌ Ulanish xatosi:', err));
 
 let users = [
   { id: 1, name: 'Ali' },
